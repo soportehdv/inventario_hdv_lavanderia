@@ -11,6 +11,7 @@
 @section('adminlte_css')
     @stack('css')
     @yield('css')
+    @yield('cssDataTable')
     <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
 @stop
 
@@ -69,4 +70,5 @@
 @section('adminlte_js')
     @stack('js')
     @yield('js')
+    @yield('jsDataTable')
 @stop

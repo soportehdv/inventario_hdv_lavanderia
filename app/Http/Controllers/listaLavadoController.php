@@ -36,7 +36,7 @@ class listaLavadoController extends Controller
             ->join('compras', 'compras.id', '=', 'listalavados.tipo')
             ->select('listalavados.*','ubicacions.nombre as nombre', 'compras.elemento as elemento', 'compras.caracteristicas as carac','listalavados.unidades')
             ->where('listalavados.id','LIKE', '%' . $query . '%')
-            ->paginate(10);
+            ->get();
 
 
             return view('listalavado/lista', [

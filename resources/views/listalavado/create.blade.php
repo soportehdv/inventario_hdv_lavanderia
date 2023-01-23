@@ -112,7 +112,7 @@
                                     placeholder="Unidades">
                             </div>
                             <div class="col-sm-4">
-                                <label for="">Tipo de prenda :</label>
+                                <label for="">Area de servicio :</label>
                                 <select class="form-control" name="servicio" required>
                                     <option value="">selecciones un tipo de prenda</option>
                                     @foreach ($ubicacion as $ubi)

@@ -46,30 +46,6 @@
             }
             }
         </style>
-        {{-- <script type="text/javascript">
-            function mifuncion() {
-                $("#preview").show();
-                let scanner = new Instascan.Scanner({
-                    video: document.getElementById('preview')
-                });
-                scanner.addListener('scan', function(content) {
-                    // alert(content);
-                    document.getElementById('hola').value = content;
-                    scanner.stop();
-                    $("#preview").hide();
-
-                });
-                Instascan.Camera.getCameras().then(function(cameras) {
-                    if (cameras.length > 0) {
-                        scanner.start(cameras[0]);
-                    } else {
-                        console.error('No cameras found.');
-                    }
-                }).catch(function(e) {
-                    console.error(e);
-                });
-            }
-        </script> --}}
         <div class="card">
             <div class="card-body">
                 <form method="POST" action="{{ route('listalavado.create') }}">
@@ -136,7 +112,7 @@
                                     placeholder="Unidades">
                             </div>
                             <div class="col-sm-4">
-                                <label for="">Tipo de prenda :</label>
+                                <label for="">Area de servicio :</label>
                                 <select class="form-control" name="servicio" required>
                                     <option value="">selecciones un tipo de prenda</option>
                                     @foreach ($ubicacion as $ubi)

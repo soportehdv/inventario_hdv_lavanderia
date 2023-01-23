@@ -15,6 +15,11 @@
         </div>
     @endif
 
+    @section('cssDataTable')
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css" />
+    @endsection
+
+
 @endsection
 
 @section('content')
@@ -88,7 +93,7 @@
                 </div>
             </div>
         </div>
-        <table class="table table-striped table-res">
+        <table id="lavado" class="table table-striped table-res">
             <thead>
                 <tr>
                     <th>#</th>
@@ -136,7 +141,19 @@
             </tbody>
         </table>
     </div>
-
-
-
+@endsection
+@section('jsDataTable')
+    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#lavado').DataTable({
+                "order": [[ 0, "desc" ]],
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/1.10.15/i18n/Spanish.json"
+                }
+            });
+        });
+    </script>
 @endsection

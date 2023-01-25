@@ -137,17 +137,17 @@
                             <div class="col-sm-3">
                                 <label for="">Elemento </label>
                                 <input type="text" class="form-control upper" name="elemento" value=""
-                                    placeholder="Elemento">
+                                    placeholder="Elemento" required>
                             </div>
                             <div class="col-sm-3">
                                 <label for="">Caracteristicas </label>
                                 <input type="text" class="form-control upper" name="caracteristicas" value=""
-                                    placeholder="Caracteristicas">
+                                    placeholder="Caracteristicas" required>
                             </div>
                             <div class="col-sm-3">
                                 <label for="">Cantidad </label>
                                 <input type="number" class="form-control upper" name="cantidad" value=""
-                                    placeholder="Cantidad">
+                                    placeholder="Cantidad" required>
                             </div>
 
                         </div>
@@ -158,22 +158,22 @@
                             <div class="col-sm-3">
                                 <label for="">Ancho </label>
                                 <input type="text" class="form-control upper" name="ancho" value=""
-                                    placeholder="Ancho">
+                                    placeholder="Ancho" required>
                             </div>
                             <div class="col-sm-3">
                                 <label for="">largo </label>
                                 <input type="text" class="form-control upper" name="largo" value=""
-                                    placeholder="largo">
+                                    placeholder="largo" required>
                             </div>
                             <div class="col-sm-3">
                                 <label for="">color </label>
                                 <input type="text" class="form-control upper" name="color" value=""
-                                    placeholder="color">
+                                    placeholder="color" required>
                             </div>
                             <div class="col-sm-3">
                                 <label for="">tela </label>
                                 <input type="text" class="form-control upper" name="tela" value=""
-                                    placeholder="tela">
+                                    placeholder="tela" required>
                             </div>
                         </div>
 

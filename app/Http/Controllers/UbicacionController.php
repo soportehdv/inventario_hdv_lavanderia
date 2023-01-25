@@ -14,9 +14,9 @@ class UbicacionController extends Controller
         {
             $this->middleware('auth');
             $this->middleware('admin');
-    
+
         }
-        
+
     public function getlistaubicacion(Request $request)
     {
         if($request){
@@ -24,8 +24,8 @@ class UbicacionController extends Controller
             $query= trim($request->get('search'));
             $ubicacion = ubicacion::where('nombre','LIKE', '%' . $query . '%')
             ->orderBy('id', 'asc')
-            // ->get();
-            ->paginate(10);
+            ->get();
+            // ->paginate(10);
 
             return view('Ubicacion/lista', [
                 'ubicacion' => $ubicacion,
@@ -58,7 +58,7 @@ class UbicacionController extends Controller
 
             return redirect()->back();
         }
-       
+
         $ubicacion = new ubicacion();
         $ubicacion->nombre = $request->input('nombre');
 

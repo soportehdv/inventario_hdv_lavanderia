@@ -37,7 +37,7 @@ class ComprasController extends Controller
                 ->where('serial','LIKE', '%' . $query . '%')
                 ->where('status','LIKE', '%' . 1 . '%')
                 ->orderBy('id', 'asc')
-                ->paginate(10);
+                ->get();
 
             return view('compras/lista', [
                 'compras' => $compras,

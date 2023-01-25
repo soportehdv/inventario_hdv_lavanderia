@@ -8,79 +8,126 @@
         </div>
 
     </div>
-
+@section('cssDataTable')
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css" />
+@endsection
 
 @endsection
 
 @section('content')
 
-    <div class="container">
+<div class="container">
 
-        <div class="row">
-            <div class="col-sm-8">
-                <a href="{{ route('clientes.create.vista') }}" class="btn btn-primary mt-4"><i
-                        class="fas fa-plus-circle"></i> Añadir nuevo</a>
-
-            </div>
-
-            <div class="col-sm-2">
-                <form method="GET" action="{{ route('clientes.lista') }}">
-                    <label>Ordenar por:</label>
-                    <select class="form-control" name="filtro">
-                        <option value="1">Más recientes </option>
-                        <option value="2">Tipos </option>
-                        <option value="3">Estados </option>
-
-
-                    </select>
-            </div>
-            <div class="col-sm-2" style="top: 0.4em">
-                <button type="submit" class="btn btn-primary  mt-4"><i class="fas fa-search"></i> Buscar</button>
-
-            </div>
-            </form>
+    <div class="row">
+        <div class="col-sm-8">
+            <a href="{{ route('clientes.create.vista') }}" class="btn btn-primary mt-4"><i class="fas fa-plus-circle"></i>
+                Añadir nuevo</a>
 
         </div>
-
     </div>
-    @if (Auth::user()->rol == 'admin')
-        @foreach (['danger', 'warning', 'success', 'info'] as $msg)
-            @if (Session::has('alert-' . $msg))
-                <div class="alert {{ 'alert-' . $msg }} alert-dismissable">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    {{ Session::get('alert-' . $msg) }}
-                </div>
-            @endif
-        @endforeach
-        <br>
-        <div class="container">
 
-            <table class="table table-striped table-res">
-                <thead>
+</div>
+@if (Auth::user()->rol == 'admin')
+    @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+        @if (Session::has('alert-' . $msg))
+            <div class="alert {{ 'alert-' . $msg }} alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                {{ Session::get('alert-' . $msg) }}
+            </div>
+        @endif
+    @endforeach
+    <br>
+    <div class="container">
+
+        <table id="pedidos1" class="table table-striped table-res">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Responsable</th>
+                    <th style="background-color:#343a40; color:white;">Ubicación</th>
+                    <th>Telefono</th>
+                    <th>Estado</th>
+                    <th>Tipo</th>
+                    <th>Cant.</th>
+                    <th>Pend.</th>
+                    <th>Comentario</th>
+                    <th>Acción</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($clientes as $cliente)
                     <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Responsable</th>
-                        <th scope="col" style="background-color:#343a40; color:white;">Ubicación</th>
-                        <th scope="col">Telefono</th>
-                        <th scope="col">Estado</th>
-                        <th scope="col">Tipo</th>
-                        <th scope="col">Cant.</th>
-                        <th scope="col">Pend.</th>
-                        <th scope="col">Comentario</th>
-
-
-                        @if (Auth::user()->rol == 'admin')
-                            <th scope="col">Acción</th>
+                        <td>{{ $cliente->id }}</td>
+                        <td>{{ $cliente->responsable }}</td>
+                        <td>{{ $cliente->ubicacion }}</td>
+                        <td>{{ $cliente->registro }}</td>
+                        @if ($cliente->entregado != 0)
+                            <td>
+                                <span class="badge badge-pill badge-danger">Pendiente</span>
+                            </td>
+                        @else()
+                            <td>
+                                <span class="badge badge-pill badge-success">Entregado</span>
+                            </td>
                         @endif
 
+                        <td>{{ $cliente->elemento }}, {{ $cliente->caracteristicas }}</td>
+                        <td>{{ $cliente->cantidad }}</td>
+                        <td>{{ $cliente->entregado }}</td>
+                        <td
+                            style="max-width: 100px;
+                            font-size: 16px;
+                            overflow: hidden;
+                            white-space: nowrap;
+                            text-overflow: ellipsis;">
+                            {{ $cliente->direccion }}
+                        </td>
+                        <td>
+                            <a href="{{ route('clientes.update.vista', $cliente->id) }}"
+                                class="btn btn-success mb-2"><i class="fas fa-eye"></i></a>
+
+                        </td>
+
                     </tr>
-                </thead>
-                <tbody>
-                    @foreach ($clientes as $cliente)
+                @endforeach
+            </tbody>
+        </table>
+
+    </div>
+@else
+    @foreach (['danger', 'warning', 'success', 'info'] as $msg)
+        @if (Session::has('alert-' . $msg))
+            <div class="alert {{ 'alert-' . $msg }} alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                {{ Session::get('alert-' . $msg) }}
+            </div>
+        @endif
+    @endforeach
+    <br>
+    <div class="container">
+
+        <table id="pedidos2" class="table table-striped table-res">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Responsable</th>
+                    <th>Cargo</th>
+                    <th>Telefono</th>
+                    <th>Estado</th>
+                    <th>Tipo</th>
+                    <th>Cant.</th>
+                    <th>pend.</th>
+                    <th>ubicación</th>
+                    <th>Comentario</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($clientes as $cliente)
+                    @if (Auth::user()->id == $cliente->responsable_id)
                         <tr>
-                            <th scope="row">{{ $cliente->id }}</th>
+                            <td>{{ $cliente->id }}</td>
                             <td>{{ $cliente->responsable }}</td>
-                            <td>{{ $cliente->ubicacion }}</td>
+                            <td>{{ $cliente->cargo }}</td>
                             <td>{{ $cliente->registro }}</td>
                             @if ($cliente->entregado != 0)
                                 <td>
@@ -91,111 +138,70 @@
                                     <span class="badge badge-pill badge-success">Entregado</span>
                                 </td>
                             @endif
-
-                            <td>{{$cliente->elemento}}, {{ $cliente->caracteristicas }}</td>
-                            <td>{{$cliente->cantidad}}</td>
-                            <td>{{$cliente->entregado}}</td>
-                            <td style="max-width: 100px;
+                            <td>{{ $cliente->elemento }}, {{ $cliente->caracteristicas }}</td>
+                            <td>{{ $cliente->cantidad }}</td>
+                            <td>{{ $cliente->entregado }}</td>
+                            <td>{{ $cliente->ubicacion }}</td>
+                            <td
+                                style="max-width: 100px;
                             font-size: 16px;
                             overflow: hidden;
                             white-space: nowrap;
                             text-overflow: ellipsis;">
                                 {{ $cliente->direccion }}
                             </td>
-
-                            @if (Auth::user()->rol == 'admin')
-                                <td>
-                                    <a href="{{ route('clientes.update.vista', $cliente->id) }}"
-                                        class="btn btn-success mb-2"><i class="fas fa-eye"></i></a>
-
-                                </td>
-                            @endif
-
                         </tr>
-                    @endforeach
-                </tbody>
-            </table>
-            {{ $clientes->links() }}
-
-        </div>
-    @else
-        @foreach (['danger', 'warning', 'success', 'info'] as $msg)
-            @if (Session::has('alert-' . $msg))
-                <div class="alert {{ 'alert-' . $msg }} alert-dismissable">
-                    <button type="button" class="close" data-dismiss="alert">&times;</button>
-                    {{ Session::get('alert-' . $msg) }}
-                </div>
-            @endif
-        @endforeach
-        <br>
-        <div class="container">
-
-            <table class="table table-striped table-res">
-                <thead>
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Responsable</th>
-                        <th scope="col">Cargo</th>
-                        <th scope="col">Telefono</th>
-                        <th scope="col">Estado</th>
-                        <th scope="col">Tipo</th>
-                        <th scope="col">Cant.</th>
-                        <th scope="col">pend.</th>
-                        <th scope="col">ubicación</th>
-                        <th scope="col">Comentario</th>
+                    @endif
+                @endforeach
+            </tbody>
+        </table>
 
 
-                        @if (Auth::user()->rol == 'admin')
-                            <th scope="col">Acción</th>
-                        @endif
-
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($clientes as $cliente)
-                        <tr>
-                            @if (Auth::user()->id == $cliente->responsable_id)
-                                <th scope="row">{{ $cliente->id }}</th>
-                                <td>{{ $cliente->responsable }}</td>
-                                <td>{{ $cliente->cargo }}</td>
-                                <td>{{ $cliente->registro }}</td>
-                                @if ($cliente->entregado != 0)
-                                    <td>
-                                        <span class="badge badge-pill badge-danger">Pendiente</span>
-                                    </td>
-                                @else()
-                                    <td>
-                                        <span class="badge badge-pill badge-success">Entregado</span>
-                                    </td>
-                                @endif
-                                <td>{{$cliente->elemento}}, {{ $cliente->caracteristicas }}</td>
-                                <td>{{$cliente->cantidad}}</td>
-                                <td>{{$cliente->entregado}}</td>
-
-                                <td>{{ $cliente->ubicacion }}</td>
-                                <td style="max-width: 100px;
-                            font-size: 16px;
-                            overflow: hidden;
-                            white-space: nowrap;
-                            text-overflow: ellipsis;">
-                                    {{ $cliente->direccion }}
-                                </td>
-
-                                @if (Auth::user()->rol == 'admin')
-                                    <td>
-                                        <a href="{{ route('clientes.update.vista', $cliente->id) }}"
-                                            class="btn btn-success mb-2"><i class="fas fa-edit"></i></a>
-
-                                    </td>
-                                @endif
-                            @endif
-                        </tr>
-                    @endforeach
-                </tbody>
-            </table>
-            {{ $clientes->links() }}
-
-        </div>
-    @endif
     </div>
+@endif
+</div>
+@endsection
+@section('jsDataTable')
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#pedidos1').DataTable({
+            "language": {
+                searchPanes: {
+                    title: {
+                        _: 'Total de filtros selecionados - %d',
+                        0: 'Selecione un opción para filtrar tu busqueda',
+                        1: 'Se ha selecionado un filtro'
+                    },
+                    "clearMessage": "Borrar seleccionados",
+                    "showMessage": "Mostrar Todo",
+                    "collapseMessage": "Contraer Todo",
+                    count: '{total}',
+                    countFiltered: '{shown} ({total})',
+                },
+                "lengthMenu": "Mostrar _MENU_ registros por página",
+                "zeroRecords": "No se ha encontrado nada relacionado - Disculpa",
+                "info": "Mostrando la pagina _PAGE_ de _PAGES_",
+                "infoEmpty": "No records available",
+                "infoFiltered": "(Filtrado de _MAX_ registros totales)",
+                "search": "Buscar:",
+                "paginate": {
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                },
+                "buttons": {
+                    "copy": "Copiar",
+                    "print": "Imprimir",
+                }
+            }
+        });
+    });
+</script>
+<script>
+    $(document).ready(function() {
+        $('#pedidos2').DataTable({});
+    });
+</script>
 @endsection

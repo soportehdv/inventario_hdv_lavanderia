@@ -8,6 +8,9 @@
         </div>
 
     </div>
+    @section('cssDataTable')
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.12.1/css/dataTables.bootstrap4.min.css" />
+@endsection
 
 @endsection
 
@@ -71,7 +74,7 @@
 
         </div>
         <br>
-        <table class="table table-striped table-res">
+        <table id="entregas" class="table table-striped table-res">
             <thead>
                 <tr>
                     <th scope="col">ID</th>
@@ -124,18 +127,50 @@
                                         </a>
                                     @endif
                                 @endforeach
-
                             </td>
-
-
-
                         </tr>
                     @endif
                 @endforeach
             </tbody>
         </table>
-
-        {{ $ventas->links() }}
-
     </div>
+@endsection
+@section('jsDataTable')
+<script src="https://code.jquery.com/jquery-3.5.1.js"></script>
+<script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.12.1/js/dataTables.bootstrap4.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $('#entregas').DataTable({
+            "language": {
+                searchPanes: {
+                    title: {
+                        _: 'Total de filtros selecionados - %d',
+                        0: 'Selecione un opción para filtrar tu busqueda',
+                        1: 'Se ha selecionado un filtro'
+                    },
+                    "clearMessage": "Borrar seleccionados",
+                    "showMessage": "Mostrar Todo",
+                    "collapseMessage": "Contraer Todo",
+                    count: '{total}',
+                    countFiltered: '{shown} ({total})',
+                },
+                "lengthMenu": "Mostrar _MENU_ registros por página",
+                "zeroRecords": "No se ha encontrado nada relacionado - Disculpa",
+                "info": "Mostrando la pagina _PAGE_ de _PAGES_",
+                "infoEmpty": "No records available",
+                "infoFiltered": "(Filtrado de _MAX_ registros totales)",
+                "search": "Buscar:",
+                "paginate": {
+                    "next": "Siguiente",
+                    "previous": "Anterior"
+                },
+                "buttons": {
+                    "copy": "Copiar",
+                    "print": "Imprimir",
+                }
+            }
+        });
+    });
+</script>
 @endsection
